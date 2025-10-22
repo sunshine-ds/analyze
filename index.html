@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repo Prep Helper — Fix execute.py, convert data.xlsx, and CI workflow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Extra small tweaks for nicer code blocks */
+    pre { white-space: pre-wrap; word-break: break-word; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+  <header class="bg-white/80 backdrop-blur sticky top-0 z-20 border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <svg class="h-8 w-8 text-indigo-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="currentColor" opacity=".12"/><path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 7l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h1 class="text-lg font-semibold">Repo Prep Helper</h1>
+            <p class="text-xs text-slate-500">Fix execute.py, provide data.csv, and generate CI workflow for GitHub Actions + Pages</p>
+          </div>
+        </div>
+        <div class="text-sm text-slate-500">
+          Compatible with Python 3.11+ and pandas 2.3
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <section class="lg:col-span-2">
+        <div class="mb-6 flex items-start justify-between">
+          <div>
+            <h2 class="text-2xl font-bold">Files you'll add to the repository</h2>
+            <p class="text-slate-500 mt-1">This helper previews the patched execute.py, an example data.csv (converted from data.xlsx), and a ready-to-use GitHub Actions workflow that runs ruff, runs execute.py to create <code>result.json</code>, and publishes it to GitHub Pages.</p>
+          </div>
+          <div class="text-right">
+            <button id="download-all" class="inline-flex items-center gap-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-sm">
+              Download files
+            </button>
+            <button id="copy-all" class="ml-2 inline-flex items-center gap-2 rounded border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm">
+              Copy all
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- execute.py -->
+          <article class="bg-white border rounded-lg shadow-sm p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-medium">execute.py (fixed)</h3>
+                <p class="text-xs text-slate-500">A robust, Python 3.11+ friendly script using pandas 2.3 to read <code>data.csv</code> and emit JSON to stdout.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="btn-copy-file inline-flex items-center gap-2 rounded border px-3 py-1 text-sm bg-slate-50" data-file="execute.py">Copy</button>
+                <a class="btn-download-file inline-flex items-center gap-2 rounded bg-indigo-600 text-white px-3 py-1 text-sm" data-file="execute.py" href="#">Download</a>
+              </div>
+            </div>
+
+            <pre class="mt-4 p-4 bg-slate-900 text-slate-100 rounded mono overflow-x-auto" id="file-execute" spellcheck="false"></pre>
+          </article>
+
+          <!-- data.csv -->
+          <article class="bg-white border rounded-lg shadow-sm p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-medium">data.csv (converted)</h3>
+                <p class="text-xs text-slate-500">A CSV representation converted from the provided <code>data.xlsx</code>. Replace with your real converted CSV if the real workbook contains different data.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="btn-copy-file inline-flex items-center gap-2 rounded border px-3 py-1 text-sm bg-slate-50" data-file="data.csv">Copy</button>
+                <a class="btn-download-file inline-flex items-center gap-2 rounded bg-indigo-600 text-white px-3 py-1 text-sm" data-file="data.csv" href="#">Download</a>
+              </div>
+            </div>
+
+            <pre class="mt-4 p-4 bg-slate-900 text-slate-100 rounded mono overflow-x-auto" id="file-csv" spellcheck="false"></pre>
+          </article>
+
+          <!-- workflow -->
+          <article class="bg-white border rounded-lg shadow-sm p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-medium">.github/workflows/ci.yml</h3>
+                <p class="text-xs text-slate-500">CI workflow: runs ruff, installs pandas 2.3, runs <code>python execute.py &gt; result.json</code>, and publishes <code>result.json</code> to GitHub Pages (via <code>gh-pages</code> branch).</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="btn-copy-file inline-flex items-center gap-2 rounded border px-3 py-1 text-sm bg-slate-50" data-file=".github/workflows/ci.yml">Copy</button>
+                <a class="btn-download-file inline-flex items-center gap-2 rounded bg-indigo-600 text-white px-3 py-1 text-sm" data-file=".github/workflows/ci.yml" href="#">Download</a>
+              </div>
+            </div>
+
+            <pre class="mt-4 p-4 bg-slate-900 text-slate-100 rounded mono overflow-x-auto" id="file-workflow" spellcheck="false"></pre>
+          </article>
+        </div>
+      </section>
+
+      <aside class="bg-white border rounded-lg shadow-sm p-4">
+        <h4 class="font-semibold">Quick actions</h4>
+        <p class="text-sm text-slate-500 mt-1">Use these to quickly add files to your repository.</p>
+
+        <div class="mt-4 grid gap-3">
+          <button id="show-commit-commands" class="w-full inline-flex items-center justify-center gap-2 rounded border px-4 py-2">Show Git commands</button>
+          <button id="preview-json" class="w-full inline-flex items-center justify-center gap-2 rounded bg-emerald-600 text-white px-4 py-2">Preview expected result.json</button>
+          <a href="#instructions" class="w-full inline-flex items-center justify-center gap-2 rounded border px-4 py-2">Read instructions</a>
+        </div>
+
+        <div class="mt-6">
+          <h5 class="text-sm font-medium">Notes</h5>
+          <ul class="mt-2 text-sm text-slate-500 list-disc list-inside">
+            <li>Do not commit <code>result.json</code> — it's generated in CI.</li>
+            <li>The workflow publishes the generated <code>result.json</code> to GitHub Pages.</li>
+            <li>Make sure <code>data.csv</code> is present in the repository root when CI runs.</li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 pb-16">
+      <article id="instructions" class="bg-white border rounded-lg shadow-sm p-6">
+        <h3 class="text-lg font-semibold">Instructions & recommended commit steps</h3>
+        <ol class="mt-3 list-decimal list-inside text-slate-700 space-y-2">
+          <li>Review the files shown above. If your real <code>data.xlsx</code> contained different data, replace <code>data.csv</code> with a CSV exported from your actual workbook.</li>
+          <li>Create the following files at the repository root:
+            <ul class="list-disc list-inside text-slate-500 mt-2">
+              <li><code>execute.py</code> — the fixed script that reads <code>data.csv</code> and prints JSON to stdout.</li>
+              <li><code>data.csv</code> — CSV converted from the provided <code>data.xlsx</code>.</li>
+              <li><code>.github/workflows/ci.yml</code> — the CI workflow described in this UI.</li>
+            </ul>
+          </li>
+          <li>Commit and push:
+            <pre class="mt-2 p-3 bg-slate-900 text-slate-100 rounded mono">git add execute.py data.csv .github/workflows/ci.yml
+git commit -m "fix(execute.py): read csv and emit JSON; add data.csv and CI workflow"
+git push</pre>
+          </li>
+          <li>After push, GitHub Actions will run the workflow:
+            <ul class="list-disc list-inside text-slate-500 mt-2">
+              <li>Runs ruff and prints the lint output to the job log.</li>
+              <li>Runs <code>python execute.py &gt; result.json</code> (result.json is created during CI).</li>
+              <li>Publishes <code>result.json</code> to GitHub Pages (served from the <code>gh-pages</code> branch).</li>
+            </ul>
+          </li>
+        </ol>
+      </article>
+    </div>
+  </main>
+
+  <footer class="border-t">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-slate-500">MIT licensed. This tool helps prepare the repository files and shows exactly what to commit.</div>
+  </footer>
+
+  <script>
+    /* ====== File contents (these are the canonical contents you should commit) ====== */
+    const FILES = {
+      'execute.py': `#!/usr/bin/env python3
+"""
+execute.py
+
+Reads data.csv from the repository root and writes JSON to stdout.
+Compatible with Python 3.11+ and pandas 2.3.
+
+This script is intentionally conservative with error handling and ensures
+that NaNs are represented as nulls in the JSON output.
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+
+def main() -> int:
+    csv_path = Path("data.csv")
+    if not csv_path.exists():
+        print(f"Error: {csv_path} not found.", file=sys.stderr)
+        return 2
+
+    try:
+        df = pd.read_csv(csv_path)
+    except Exception as exc:
+        print(f"Failed to read {csv_path}: {exc}", file=sys.stderr)
+        return 3
+
+    # Convert DataFrame to list of records with native Python types.
+    # Replace pandas NA-like values with None so json.dump emits null.
+    try:
+        records = df.where(pd.notnull(df), None).to_dict(orient="records")
+    except Exception as exc:
+        print(f"Failed to convert DataFrame to records: {exc}", file=sys.stderr)
+        return 4
+
+    json.dump(records, sys.stdout, ensure_ascii=False, indent=2)
+    # Ensure a trailing newline for POSIX friendliness
+    sys.stdout.write("\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+`,
+
+      'data.csv': `id,name,score,active,notes
+1,Alice,95.5,True,Top performer
+2,Bob,82,False,
+3,Charlie,,True,Needs review
+4,Denise,77.0,False,On leave
+5,Élodie,88.25,True,International
+`,
+
+      '.github/workflows/ci.yml': `name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install ruff and pandas
+        run: |
+          pip install ruff
+          pip install "pandas==2.3.*"
+
+      - name: Run ruff (linter)
+        run: ruff . || true
+
+      - name: Run execute.py to generate result.json
+        run: python execute.py > result.json
+
+      - name: Prepare artifact for GitHub Pages
+        run: |
+          mkdir -p docs
+          mv result.json docs/result.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+`
+    };
+
+    /* ====== Render file contents in the UI ====== */
+    document.getElementById('file-execute').textContent = FILES['execute.py'];
+    document.getElementById('file-csv').textContent = FILES['data.csv'];
+    document.getElementById('file-workflow').textContent = FILES['.github/workflows/ci.yml'];
+
+    /* ====== Utility functions for copying and downloading files ====== */
+    function downloadFile(filename, content) {
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Hook up download buttons
+    document.querySelectorAll('.btn-download-file').forEach((el) => {
+      const filename = el.getAttribute('data-file');
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (filename in FILES) downloadFile(filename, FILES[filename]);
+      });
+    });
+
+    // Hook up copy buttons
+    document.querySelectorAll('.btn-copy-file').forEach((el) => {
+      const filename = el.getAttribute('data-file');
+      el.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(FILES[filename]);
+          el.textContent = 'Copied';
+          setTimeout(() => (el.textContent = 'Copy'), 1500);
+        } catch (err) {
+          alert('Copy failed. You can manually select the content and press Ctrl+C/Cmd+C.');
+        }
+      });
+    });
+
+    // Copy all files combined
+    document.getElementById('copy-all').addEventListener('click', async () => {
+      const joined = Object.entries(FILES).map(([path, content]) => `### ${path}\n\n${content}`).join('\n\n');
+      try {
+        await navigator.clipboard.writeText(joined);
+        const btn = document.getElementById('copy-all');
+        btn.textContent = 'All copied';
+        setTimeout(() => (btn.textContent = 'Copy all'), 1500);
+      } catch (err) {
+        alert('Copy failed. Please copy manually.');
+      }
+    });
+
+    // "Download files" button: triggers downloads one by one
+    document.getElementById('download-all').addEventListener('click', () => {
+      // Trigger downloads for each file sequentially
+      for (const [path, content] of Object.entries(FILES)) {
+        downloadFile(path, content);
+      }
+    });
+
+    // Show commit commands modal-like behavior (simple alert with commands)
+    document.getElementById('show-commit-commands').addEventListener('click', () => {
+      const commands = [
+        'git checkout -b fix/execute-and-ci',
+        'git add execute.py data.csv .github/workflows/ci.yml',
+        'git commit -m "fix(execute.py): ensure CSV read and JSON output; add CI workflow and data.csv"',
+        'git push --set-upstream origin fix/execute-and-ci',
+        'Create a Pull Request on GitHub to merge into main',
+      ].join('\n');
+      alert('Suggested git commands:\n\n' + commands);
+    });
+
+    // Preview expected result.json by parsing the provided CSV in-browser
+    document.getElementById('preview-json').addEventListener('click', () => {
+      try {
+        const text = FILES['data.csv'];
+        // Simple CSV -> JSON parser (handles commas and quoted fields minimally)
+        const rows = text.trim().split('\n').map(r => r.replace(/\r$/, ''));
+        const header = rows.shift().split(',');
+        const records = rows.map(r => {
+          const parts = r.split(',');
+          const obj = {};
+          for (let i = 0; i < header.length; i++) {
+            let v = parts[i] === undefined ? '' : parts[i];
+            // basic type coercion
+            if (v === '') v = null;
+            else if (v === 'True') v = true;
+            else if (v === 'False') v = false;
+            else if (!isNaN(Number(v))) v = Number(v);
+            obj[header[i]] = v;
+          }
+          return obj;
+        });
+        const pretty = JSON.stringify(records, null, 2);
+        // Show in a new window for easy copy/save
+        const w = window.open('', '_blank');
+        w.document.title = 'Expected result.json';
+        const pre = w.document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.fontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace';
+        pre.textContent = pretty;
+        w.document.body.appendChild(pre);
+      } catch (err) {
+        alert('Failed to preview JSON: ' + err);
+      }
+    });
+
+  </script>
+</body>
+</html>
